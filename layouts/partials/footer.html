@@ -24,7 +24,7 @@
           {{ end }}
           {{ if .Site.Params.rss }}
           <li>
-            <a href="{{ with .OutputFormats.Get " RSS" }}{{ .RelPermalink }}{{ end }}" title="RSS">
+            <a href="{{ with .OutputFormats.Get "RSS" }}{{ .RelPermalink }}{{ end }}" title="RSS">
               <span class="mx-2">
                 <i class="bi bi-rss"></i>
               </span>
@@ -60,7 +60,7 @@
         </p>
         <!-- Please don't remove this, keep my open source work credited. -->
         <p class="credits theme-by text-muted">
-          {{ i18n "poweredBy" . | safeHTML }}
+          <!--{{ i18n "poweredBy" . | safeHTML }}-->
           {{ if $.GitInfo }}&nbsp;&bull;&nbsp;[<a href="{{ .Site.Params.commit }}{{ .GitInfo.Hash }}">{{ substr
             .GitInfo.Hash 0 8 }}</a>]{{ end }}
         </p>

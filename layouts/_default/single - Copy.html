@@ -4,20 +4,23 @@
     <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1 ">
 
       <div class="card-image card-image-blog p-0">
-    
-	{{ if not .Params.video }}
-        {{ if .Params.image }}
-		  {{ $externalURL := .Params.image }}
-		  {{ $randomNumber := div (mod (int (now.UnixNano)) 3) 1 }}
-		  {{ $newURL := printf "http://i%d.wp.com/%s" $randomNumber (replaceRE "^https?://(.*)" "$1" $externalURL) }}
-		  <img src="{{ $newURL }}" alt="{{ .Title }}" class="card-img-bottom img-fluid lazyload">
-		{{ end }}
 
-   {{ end }}
+        {{ if .Params.image }}
+        {{ with resources.Get .Params.image }}
+        {{ with .Err }}
+        {{ warnf "%s" . }}
+        {{ else }}
+
+        <img src="{{ .RelPermalink }}" alt="{{ .Title }}" class="card-img-bottom rounded img-fluid lazyload">
+        {{ end }}
+
+        {{ end }}
+        {{ end }}
+
 
         {{ if .Params.video }}
-        <video playsinline class="img-title" poster="{{ .Params.image }}" controls>
-          <source src="{{ .Params.video.url }}">
+        <video loop autoplay muted playsinline class="img-title">
+          <source src="{{ .Params.video }}">
         </video>
         {{ end }}
       </div>
@@ -42,10 +45,6 @@
         {{ end }}
       </div>
       {{ end }}
-	  
-	  {{ $lastmodstr := default (i18n "dateFormat") .Site.Params.dateformat | .Lastmod.Format }}
-	  {{ $datestr := default (i18n "dateFormat") .Site.Params.dateformat | .Date.Format }}
-	  <br/>Published {{ $datestr }}
     </div>
 
     <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1 pt-4">
@@ -125,7 +124,7 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-12 col-md-12 mt-3">
-        <h3>More for You</h3>
+        <h3>Read more</h3>
         <hr />
       </div>
 
